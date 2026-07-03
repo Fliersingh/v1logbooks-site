@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V1 Logbooks — DGCA-Compliant Pilot Logbook for All Aviators</title>
+<meta name="description" content="Log flights, upload to eGCA directly, and track DGCA approvals — all from your phone. Built for Indian aviators.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0B1F3A;
+    --navy-dark: #071428;
+    --navy-mid: #132C50;
+    --navy-light: #1E3F6F;
+    --blue: #2D7DD2;
+    --blue-light: #4A9AE8;
+    --blue-faint: #EBF3FC;
+    --white: #FFFFFF;
+    --off-white: #F4F7FB;
+    --text-muted: #8A9BBE;
+    --text-mid: #C5D3E8;
+    --border: rgba(255,255,255,0.08);
+    --border-light: rgba(45,125,210,0.2);
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy-dark);
+    color: var(--white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .display {
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  img { display: block; max-width: 100%; }
+
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(7, 20, 40, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.03em;
+  }
+
+  .nav-logo span { color: var(--blue-light); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    color: var(--text-mid);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--blue);
+    color: var(--white);
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--blue-light); }
+
+  /* HERO */
+  .hero {
+    padding: 160px 0 100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(45,125,210,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(45,125,210,0.12);
+    border: 1px solid var(--border-light);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: var(--blue-light);
+    margin-bottom: 28px;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--blue-light);
+    border-radius: 50%;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1.08;
+    max-width: 800px;
+    margin: 0 auto 24px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--blue-light);
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--text-mid);
+    max-width: 560px;
+    margin: 0 auto 48px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: var(--white);
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--blue-light); transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-mid);
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.2); color: var(--white); }
+
+  .hero-mockup {
+    margin: 72px auto 0;
+    max-width: 340px;
+    background: var(--navy-mid);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+  }
+
+  .mockup-bar {
+    background: var(--navy-light);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mockup-bar-dots { display: flex; gap: 6px; }
+  .mockup-bar-dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+  .mockup-bar-title { font-size: 13px; color: var(--text-muted); margin-left: 4px; }
+
+  .mockup-body { padding: 20px; }
+
+  .mockup-stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .mockup-stat {
+    background: var(--navy-dark);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .mockup-stat-val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--blue-light);
+  }
+
+  .mockup-stat-label { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+  .mockup-flight {
+    background: var(--navy-dark);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mockup-flight-route { font-size: 14px; font-weight: 500; }
+  .mockup-flight-date { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  .mockup-badge {
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  .badge-approved { background: rgba(34,197,94,0.15); color: #4ADE80; }
+  .badge-pending { background: rgba(45,125,210,0.15); color: var(--blue-light); }
+  .badge-uploaded { background: rgba(168,85,247,0.15); color: #C084FC; }
+
+  /* FEATURES */
+  .section {
+    padding: 100px 0;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    margin-bottom: 16px;
+  }
+
+  .section-heading {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.15;
+    max-width: 560px;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    font-size: 17px;
+    color: var(--text-mid);
+    max-width: 500px;
+    margin-bottom: 56px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .feature-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    transition: border-color 0.2s;
+  }
+
+  .feature-card:hover { border-color: var(--border-light); }
+
+  .feature-icon {
+    width: 44px; height: 44px;
+    background: rgba(45,125,210,0.12);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .feature-icon svg { width: 22px; height: 22px; stroke: var(--blue-light); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  .feature-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 10px; }
+  .feature-card p { font-size: 14px; color: var(--text-mid); line-height: 1.65; }
+
+  /* HOW IT WORKS */
+  .how-section { background: var(--navy); padding: 100px 0; }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+
+  .step {
+    padding: 40px 32px;
+    position: relative;
+  }
+
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 56px;
+    right: 0;
+    width: 1px;
+    height: 60%;
+    background: var(--border);
+  }
+
+  .step-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: rgba(45,125,210,0.18);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .step h3 { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+  .step p { font-size: 14px; color: var(--text-mid); line-height: 1.65; }
+
+  /* COMPLIANCE */
+  .compliance-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .compliance-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  .compliance-check {
+    width: 24px; height: 24px;
+    background: rgba(34,197,94,0.12);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .compliance-check svg { width: 14px; height: 14px; stroke: #4ADE80; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+  .compliance-item h4 { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+  .compliance-item p { font-size: 13px; color: var(--text-muted); }
+
+  /* PRICING */
+  .pricing-card {
+    max-width: 440px;
+    margin: 0 auto;
+    background: var(--navy-mid);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 48px;
+    text-align: center;
+  }
+
+  .pricing-badge {
+    display: inline-block;
+    background: rgba(45,125,210,0.12);
+    color: var(--blue-light);
+    border: 1px solid var(--border-light);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  .pricing-card h3 { font-size: 32px; margin-bottom: 12px; }
+  .pricing-card .price { font-size: 48px; font-weight: 700; color: var(--blue-light); margin-bottom: 4px; }
+  .pricing-card .price-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 32px; }
+
+  .pricing-features { list-style: none; text-align: left; margin-bottom: 36px; }
+
+  .pricing-features li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+    color: var(--text-mid);
+  }
+
+  .pricing-features li:last-child { border-bottom: none; }
+
+  .pricing-features li::before {
+    content: '✓';
+    color: #4ADE80;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* SECURITY */
+  .security-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .security-list { list-style: none; margin-top: 32px; }
+
+  .security-list li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+    color: var(--text-mid);
+  }
+
+  .security-list li:last-child { border-bottom: none; }
+
+  .security-dot {
+    width: 8px; height: 8px;
+    background: var(--blue-light);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+
+  .security-panel {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+  }
+
+  .security-panel-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  .security-panel-row:last-child { border-bottom: none; }
+  .security-panel-row span:first-child { color: var(--text-muted); }
+
+  .status-ok {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #4ADE80;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .status-ok::before { content: '●'; font-size: 8px; }
+
+  /* CONTACT */
+  .contact-section { background: var(--navy); padding: 100px 0; }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .contact-info h2 { font-size: 36px; margin-bottom: 16px; }
+  .contact-info p { font-size: 16px; color: var(--text-mid); margin-bottom: 40px; }
+
+  .contact-detail {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: var(--text-mid);
+  }
+
+  .contact-detail-icon {
+    width: 36px; height: 36px;
+    background: rgba(45,125,210,0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-detail-icon svg { width: 16px; height: 16px; stroke: var(--blue-light); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  .contact-form {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+  }
+
+  .form-group { margin-bottom: 20px; }
+
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-mid);
+    margin-bottom: 8px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: var(--navy-dark);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 15px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: var(--text-muted); }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--blue); }
+
+  .form-group select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238A9BBE' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  .form-group select option { background: var(--navy-dark); }
+
+  .form-group textarea { resize: vertical; min-height: 120px; }
+
+  .form-honeypot { display: none; }
+
+  .form-submit {
+    width: 100%;
+    background: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+  }
+
+  .form-submit:hover { background: var(--blue-light); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .footer-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .footer-logo span { color: var(--blue-light); }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-copy { font-size: 13px; color: var(--text-muted); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .compliance-grid { grid-template-columns: 1fr; }
+    .security-row { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .step::after { display: none; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">V1<span>Logbooks</span></div>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#compliance">Compliance</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Support</a></li>
+    </ul>
+    <a href="#pricing" class="nav-cta">Start free trial</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">DGCA-compliant · eGCA direct upload</div>
+    <h1>The logbook built for <em>every Indian aviator</em></h1>
+    <p class="hero-sub">Log flights, upload to eGCA directly, and track DGCA approvals — all from your phone. No paperwork, no guesswork.</p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn-primary">Start your free trial</a>
+      <a href="#features" class="btn-secondary">See how it works</a>
+    </div>
+
+    <div class="hero-mockup">
+      <div class="mockup-bar">
+        <div class="mockup-bar-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <span class="mockup-bar-title">V1 Logbooks</span>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-stat-row">
+          <div class="mockup-stat">
+            <div class="mockup-stat-val">312</div>
+            <div class="mockup-stat-label">Total hours</div>
+          </div>
+          <div class="mockup-stat">
+            <div class="mockup-stat-val">48</div>
+            <div class="mockup-stat-label">Flights</div>
+          </div>
+          <div class="mockup-stat">
+            <div class="mockup-stat-val">6</div>
+            <div class="mockup-stat-label">Pending</div>
+          </div>
+        </div>
+        <div class="mockup-flight">
+          <div>
+            <div class="mockup-flight-route">VIDP → VOHS</div>
+            <div class="mockup-flight-date">12 Jun 2026 · 2h 15m</div>
+          </div>
+          <span class="mockup-badge badge-approved">Approved</span>
+        </div>
+        <div class="mockup-flight">
+          <div>
+            <div class="mockup-flight-route">VOBL → VABB</div>
+            <div class="mockup-flight-date">08 Jun 2026 · 1h 45m</div>
+          </div>
+          <span class="mockup-badge badge-pending">Pending</span>
+        </div>
+        <div class="mockup-flight">
+          <div>
+            <div class="mockup-flight-route">VABB → VIDP</div>
+            <div class="mockup-flight-date">05 Jun 2026 · 2h 05m</div>
+          </div>
+          <span class="mockup-badge badge-uploaded">Uploaded</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-label">Features</div>
+    <h2 class="section-heading">Everything a pilot needs, nothing they don't</h2>
+    <p class="section-sub">Built from the ground up for Indian aviation regulations and real operational workflows.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Direct eGCA upload</h3>
+        <p>Upload flights straight to the DGCA eGCA portal from your phone. No manual data entry, no double-handling. Your authenticated session, your data.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Offline-first</h3>
+        <p>Log flights without a connection. Everything syncs automatically when you're back online. Your logbook is always available, wherever you fly.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </div>
+        <h3>FDTL tracking</h3>
+        <p>Automatic duty time calculations per CAR Section 7. Know your 7-day, 14-day, 28-day, and 90-day totals at a glance.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Approval tracking</h3>
+        <p>See exactly where each flight stands — uploaded, pending approval, approved, or rejected — in one clear view. No more chasing your verifier.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>CPL &amp; ATPL syllabus</h3>
+        <p>Track CPL syllabus exercises and progress automatically. Built for students and licensed pilots alike, covering the full DGCA training framework.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Recency &amp; currency</h3>
+        <p>Stay on top of medical validity, licence renewals, and flight recency requirements. Alerts surface before they become a problem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="container">
+    <div class="section-label">How it works</div>
+    <h2 class="section-heading" style="margin-bottom: 56px;">Three steps from logbook to DGCA</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Log your flight</h3>
+        <p>Enter flight details in seconds. Aircraft, route, departure and arrival times, exercise type, and remarks. Works offline — syncs when you're connected.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Upload to eGCA</h3>
+        <p>One tap to push your flight directly to the DGCA eGCA portal. No copy-paste, no browser juggling. The app handles the authenticated session for you.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Track approval</h3>
+        <p>Monitor pending, approved, and rejected flights from the logbook view. When your verifier acts, the status updates automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section class="section" id="compliance">
+  <div class="container">
+    <div class="section-label">DGCA compliance</div>
+    <h2 class="section-heading">Built to Indian aviation standards</h2>
+    <p class="section-sub">Every feature is built against official DGCA regulations — not interpretations of them.</p>
+    <div class="compliance-grid">
+      <div class="compliance-item">
+        <div class="compliance-check"><svg viewBox="0 0 14 14"><polyline points="2 7 6 11 12 3"/></svg></div>
+        <div>
+          <h4>CAR Section 7 FDTL</h4>
+          <p>Duty time limits per CAR Section 7 Series J Part III (Rev 2, 26 Mar 2024). 35h/7d, 65h/14d, 100h/28d, 300h/90d.</p>
+        </div>
+      </div>
+      <div class="compliance-item">
+        <div class="compliance-check"><svg viewBox="0 0 14 14"><polyline points="2 7 6 11 12 3"/></svg></div>
+        <div>
+          <h4>eGCA portal integration</h4>
+          <p>Flights submitted via the official DGCA eGCA portal with your own authenticated credentials. No third-party intermediaries.</p>
+        </div>
+      </div>
+      <div class="compliance-item">
+        <div class="compliance-check"><svg viewBox="0 0 14 14"><polyline points="2 7 6 11 12 3"/></svg></div>
+        <div>
+          <h4>Verifier workflow</h4>
+          <p>DGCA-mandated verifier assignment on every submitted flight. CFI, airline verifier, and self-attestation roles supported.</p>
+        </div>
+      </div>
+      <div class="compliance-item">
+        <div class="compliance-check"><svg viewBox="0 0 14 14"><polyline points="2 7 6 11 12 3"/></svg></div>
+        <div>
+          <h4>CPL/ATPL syllabus tracking</h4>
+          <p>Full DGCA CPL syllabus exercise log with progress tracking. Covers all required exercises across the training framework.</p>
+        </div>
+      </div>
+      <div class="compliance-item">
+        <div class="compliance-check"><svg viewBox="0 0 14 14"><polyline points="2 7 6 11 12 3"/></svg></div>
+        <div>
+          <h4>Medical &amp; licence validity</h4>
+          <p>Track Class 1 and Class 2 medical validity periods. Alerts before expiry so you're never caught off-guard.</p>
+        </div>
+      </div>
+      <div class="compliance-item">
+        <div class="compliance-check"><svg viewBox="0 0 14 14"><polyline points="2 7 6 11 12 3"/></svg></div>
+        <div>
+          <h4>Simulator session logging</h4>
+          <p>Log simulator sessions separately from flight time. Correct classification for DGCA reporting and currency requirements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section class="section" style="background: var(--navy-dark);">
+  <div class="container">
+    <div class="security-row">
+      <div>
+        <div class="section-label">Security</div>
+        <h2 class="section-heading">Your data stays yours</h2>
+        <p style="font-size: 16px; color: var(--text-mid); margin-bottom: 8px;">Your logbook data is flight-safety-sensitive. We treat it that way.</p>
+        <ul class="security-list">
+          <li><span class="security-dot"></span>End-to-end encrypted data in transit and at rest</li>
+          <li><span class="security-dot"></span>eGCA credentials never stored — only your session, on your device</li>
+          <li><span class="security-dot"></span>Per-pilot data isolation — no other pilot can access your records</li>
+          <li><span class="security-dot"></span>JWT-authenticated API with strict ownership enforcement on every endpoint</li>
+          <li><span class="security-dot"></span>No third-party data sharing or advertising</li>
+        </ul>
+      </div>
+      <div class="security-panel">
+        <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;">Security status</div>
+        <div class="security-panel-row">
+          <span>Data encryption</span>
+          <span class="status-ok">Active</span>
+        </div>
+        <div class="security-panel-row">
+          <span>eGCA session isolation</span>
+          <span class="status-ok">On-device only</span>
+        </div>
+        <div class="security-panel-row">
+          <span>Pilot data ownership</span>
+          <span class="status-ok">Enforced</span>
+        </div>
+        <div class="security-panel-row">
+          <span>Third-party sharing</span>
+          <span style="font-size: 13px; color: var(--text-muted);">Never</span>
+        </div>
+        <div class="security-panel-row">
+          <span>Advertising</span>
+          <span style="font-size: 13px; color: var(--text-muted);">None</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="container" style="text-align: center;">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-heading" style="margin: 0 auto 16px;">Try it free for 90 days</h2>
+    <p class="section-sub" style="margin: 0 auto 56px;">No credit card required. Full access to every feature during your trial.</p>
+
+    <div class="pricing-card">
+      <div class="pricing-badge">Free trial</div>
+      <h3>Full access</h3>
+      <div class="price">₹0</div>
+      <div class="price-sub">for 90 days, then contact us for subscription</div>
+      <ul class="pricing-features">
+        <li>Unlimited flight logging</li>
+        <li>Direct eGCA portal upload</li>
+        <li>FDTL tracking &amp; alerts</li>
+        <li>CPL syllabus exercise tracking</li>
+        <li>Offline-first sync</li>
+        <li>Approval status tracking</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="display: block; text-align: center; padding: 14px;">Get started — it's free</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="section-label">Support</div>
+        <h2>We're here to help</h2>
+        <p>Have a question, found a bug, or need help setting up? Reach out and we'll get back to you.</p>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <span>support@v1logbooks.com</span>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <span>India</span>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <form action="mailto:support@v1logbooks.com" method="get" enctype="text/plain">
+          <div class="form-group form-honeypot" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" placeholder="Capt. Arjun Singh" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="arjun@example.com" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject" required>
+              <option value="" disabled selected>Select a topic</option>
+              <option value="Technical issue">Technical issue</option>
+              <option value="Account">Account</option>
+              <option value="Subscription">Subscription</option>
+              <option value="eGCA upload">eGCA upload</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="body" placeholder="Tell us what's happening..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">V1<span>Logbooks</span></div>
+      <ul class="footer-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#compliance">Compliance</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Support</a></li>
+        <li><a href="#">Privacy policy</a></li>
+        <li><a href="#">Terms of use</a></li>
+      </ul>
+      <div class="footer-copy">© 2026 Vinnta Lifesciences. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
