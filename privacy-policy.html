@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — V1 Logbooks</title>
+<style>
+  :root {
+    --ink: #1a2233;
+    --muted: #5b6472;
+    --accent: #0f766e;
+    --border: #e2e5ea;
+    --bg-soft: #f7f8fa;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    line-height: 1.6;
+    background: #fff;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 48px 24px 96px; }
+  h1 { font-size: 1.85rem; margin-bottom: 4px; }
+  .meta { color: var(--muted); font-size: 0.92rem; margin-bottom: 32px; }
+  h2 { font-size: 1.25rem; margin-top: 40px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  h3 { font-size: 1.05rem; margin-top: 24px; color: var(--accent); }
+  p, li { color: #333; }
+  ul, ol { padding-left: 1.3em; }
+  li { margin-bottom: 6px; }
+  a { color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+  th, td { text-align: left; padding: 8px 10px; border: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--bg-soft); }
+  .callout {
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin: 16px 0;
+    font-size: 0.95rem;
+  }
+  .toc { background: var(--bg-soft); border-radius: 8px; padding: 16px 20px; margin: 24px 0; }
+  .toc a { display: block; padding: 3px 0; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Privacy Policy</h1>
+  <div class="meta">V1 Logbooks (com.v1logbooks.app) &middot; Last updated: 3 July 2026</div>
+
+  <p>
+    This Privacy Policy explains what personal data V1 Logbooks ("we", "us", "the App")
+    collects, why we collect it, how it is used and protected, and the rights you have over
+    it. V1 Logbooks is a personal flight logbook application built for pilots operating under
+    the regulatory framework of the Directorate General of Civil Aviation (DGCA), India, and
+    is used to record flight time, credentials, and — optionally — to prepare and submit
+    entries to DGCA's official eGCA portal on your behalf, using your own DGCA login.
+  </p>
+
+  <div class="toc">
+    <a href="#data-we-collect">1. Data We Collect</a>
+    <a href="#third-party-data">2. Data About Other People (Crew, Instructors, Examiners)</a>
+    <a href="#directory">3. eGCA Pilot Directory Data</a>
+    <a href="#how-we-use">4. How We Use Your Data</a>
+    <a href="#third-parties">5. Third Parties We Share Data With</a>
+    <a href="#egca-portal">6. DGCA / eGCA Portal Integration</a>
+    <a href="#retention">7. Data Retention</a>
+    <a href="#security">8. Data Security</a>
+    <a href="#rights">9. Your Rights</a>
+    <a href="#children">10. Age Requirement</a>
+    <a href="#international">11. International Data Transfers</a>
+    <a href="#changes">12. Changes to This Policy</a>
+    <a href="#contact">13. Contact &amp; Grievance Officer</a>
+  </div>
+
+  <h2 id="data-we-collect">1. Data We Collect</h2>
+
+  <h3>Account &amp; profile data</h3>
+  <p>When you register, we collect:</p>
+  <ul>
+    <li>Full name, date of birth, nationality</li>
+    <li>Email address and password (stored as a salted hash — we never store your plaintext password)</li>
+    <li>Your pilot type/role and, if applicable, your DGCA eGCA licence ID</li>
+    <li>Mobile phone number</li>
+    <li>Emergency contact name and phone number</li>
+    <li>Optionally, if you choose to add them in Settings: gender, secondary phone, address, and a profile photo</li>
+  </ul>
+
+  <h3>Flight logbook data</h3>
+  <p>
+    The core purpose of the App is to record your flights. This includes aircraft
+    registration and type, departure/arrival aerodromes, dates and times, block/flight time,
+    the role you flew in, and any purposes, exercises, or remarks you attach to a flight.
+  </p>
+
+  <h3>Credentials &amp; currency data</h3>
+  <p>
+    Licence details, ratings, medical certificate data, and recurrent training records you
+    choose to log, so the App can track their validity and expiry on your behalf.
+  </p>
+
+  <h3>Scanned logbook images</h3>
+  <p>
+    If you use the AI-assisted logbook scanner to import historical entries, photos of your
+    logbook pages are processed to extract flight data (see <a href="#third-parties">Section 5</a>
+    for how this is handled).
+  </p>
+
+  <h3>Device &amp; local storage data</h3>
+  <p>
+    The App stores your data locally on your device in an encrypted SQLite database
+    (SQLCipher, with the encryption key held in your device's secure hardware-backed keystore
+    where available). This local copy is synchronized with our servers so your logbook is
+    available if you reinstall the App or use it on another device.
+  </p>
+
+  <h2 id="third-party-data">2. Data About Other People (Crew, Instructors, Examiners)</h2>
+  <p>
+    DGCA flight-time regulations require you to record who else was on board or supervising a
+    flight — co-pilots, instructors, examiners, and the verifier who attests your entries. When
+    you add these people to your logbook, we store their name, licence number where you provide
+    it, and their eGCA ID where known. <strong>You are responsible for having a lawful basis to
+    record another person's details</strong> — typically because you flew with them and DGCA
+    record-keeping rules require it. We do not use this data for any purpose other than
+    completing your logbook and, where you choose to submit a flight to eGCA, DGCA submission.
+  </p>
+
+  <h2 id="directory">3. eGCA Pilot Directory Data</h2>
+  <div class="callout">
+    <strong>This section describes a feature currently under review.</strong> We are
+    re-evaluating how much of this directory data needs to live on your device, and expect to
+    narrow it to lookup-only in a future update. This policy will be updated when that change
+    ships.
+  </div>
+  <p>
+    To make it faster to add crew you fly with to a flight entry, the App maintains a
+    searchable directory of pilot names and eGCA IDs sourced from DGCA's own eGCA system. This
+    directory may include names of individuals who are not registered users of V1 Logbooks.
+    Only name, eGCA ID, and licence number (where available) are held — no contact details,
+    flight history, or other personal data about non-users is collected or stored.
+  </p>
+  <p>
+    If you are a licensed pilot and would like your name removed from this directory, or have
+    questions about this data, contact us using the details in
+    <a href="#contact">Section 13</a>.
+  </p>
+
+  <h2 id="how-we-use">4. How We Use Your Data</h2>
+  <ul>
+    <li>To create and secure your account, and authenticate you (including one-time passcodes sent by email)</li>
+    <li>To store, sync, and back up your flight logbook across your devices</li>
+    <li>To calculate currency, recency, and regulatory totals (e.g. rolling 90-day/28-day/365-day limits) for your own reference</li>
+    <li>To prepare and, at your explicit request, submit flight entries to the DGCA eGCA portal using your own credentials</li>
+    <li>To send you account-related emails (verification codes, account notices)</li>
+    <li>To provide customer support</li>
+  </ul>
+  <p>We do not sell your personal data, and we do not use it for advertising or profiling.</p>
+
+  <h2 id="third-parties">5. Third Parties We Share Data With</h2>
+  <table>
+    <tr><th>Who</th><th>What they receive</th><th>Why</th></tr>
+    <tr>
+      <td>Google (Gemini AI)</td>
+      <td>Photos of logbook pages you choose to scan are sent from our servers to Google's Gemini API to read the page and return structured flight data. The extracted data passes through our servers but is not stored there -- it is returned directly to your device for you to review before saving.</td>
+      <td>To let you import historical logbook entries by photo instead of typing them by hand</td>
+    </tr>
+    <tr>
+      <td>Resend</td>
+      <td>Your email address and the content of one-time-passcode / account-notice emails</td>
+      <td>Sending you login and account emails</td>
+    </tr>
+    <tr>
+      <td>DGCA (eGCA portal)</td>
+      <td>Your eGCA ID and password, entered directly by you, and the flight data you choose to submit</td>
+      <td>Only when you explicitly use the "Upload to eGCA" feature — see <a href="#egca-portal">Section 6</a></td>
+    </tr>
+    <tr>
+      <td>Railway</td>
+      <td>All account and flight data described above, as our infrastructure/database host</td>
+      <td>Hosting our backend servers and database</td>
+    </tr>
+  </table>
+  <p>
+    We do not use third-party advertising networks, analytics trackers, or crash-reporting
+    services that collect your personal data.
+  </p>
+
+  <h2 id="egca-portal">6. DGCA / eGCA Portal Integration</h2>
+  <p>
+    V1 Logbooks is an independent application and is not developed, endorsed, or operated by
+    DGCA. When you choose to upload a flight to eGCA, the App opens DGCA's own official web
+    portal inside the App and submits the form on your behalf using your DGCA login, exactly
+    as if you had typed it into DGCA's website yourself. Your eGCA password is used only for
+    that single login session — <strong>it is never saved to your device or sent to our
+    servers</strong>, and is discarded from memory as soon as the session ends. Data you submit
+    to DGCA through this feature becomes subject to DGCA's own data handling as the government
+    record-holder.
+  </p>
+
+  <h2 id="retention">7. Data Retention</h2>
+  <ul>
+    <li><strong>Account &amp; flight data:</strong> kept for as long as your account is active.</li>
+    <li><strong>Scanned-image extraction results:</strong> not stored on our servers -- passed through to your device for review, then discarded server-side.</li>
+    <li><strong>Backups:</strong> the App's backup/export feature generates a file that is saved to your own device, and a copy is also stored on our servers so it can be restored later. You can delete individual backup records at any time from the in-App backup history. Backup files are not yet encrypted at rest on our servers, so treat any copy you download or share like the rest of your flight record.</li>
+    <li><strong>Account deletion:</strong> if you delete your account in Settings, we permanently and irreversibly delete your profile, flight logbook, credentials, crew records, and all associated data from our servers. This action cannot be undone.</li>
+  </ul>
+
+  <h2 id="security">8. Data Security</h2>
+  <ul>
+    <li>Passwords are hashed (never stored in plaintext) using industry-standard, salted hashing.</li>
+    <li>Your local on-device data is encrypted at rest.</li>
+    <li>Data in transit between the App and our servers is encrypted (HTTPS/TLS).</li>
+    <li>Access to your data on our servers is scoped so that only you (and, for eGCA submissions, DGCA) can access your own records.</li>
+  </ul>
+  <p>No system is perfectly secure, and we cannot guarantee absolute security, but we take reasonable, industry-standard measures to protect your data.</p>
+
+  <h2 id="rights">9. Your Rights</h2>
+  <p>Subject to applicable law (including India's Digital Personal Data Protection Act, 2023), you have the right to:</p>
+  <ul>
+    <li><strong>Access</strong> the personal data we hold about you</li>
+    <li><strong>Correct</strong> inaccurate data (most fields are editable directly in the App)</li>
+    <li><strong>Export</strong> your data via the in-App backup feature</li>
+    <li><strong>Delete</strong> your account and all associated data via the in-App account-deletion feature, or by contacting us</li>
+    <li><strong>Withdraw consent</strong> where processing is based on consent, without affecting the lawfulness of prior processing</li>
+    <li><strong>Lodge a complaint</strong> with our Grievance Officer (Section 13) or the applicable data protection authority</li>
+  </ul>
+
+  <h2 id="children">10. Age Requirement</h2>
+  <p>
+    V1 Logbooks is intended for licensed and student pilots. You must be at least 16 years old
+    to create an account. We do not knowingly collect data from anyone under 16; if you believe
+    a minor has registered an account, please contact us so we can remove it.
+  </p>
+
+  <h2 id="international">11. International Data Transfers</h2>
+  <p>
+    Some of our service providers (including Google, for AI-assisted logbook scanning, and our
+    hosting/email providers) may process data outside India. Where this occurs, we rely on
+    those providers' own contractual and technical safeguards for cross-border data transfer.
+  </p>
+
+  <h2 id="changes">12. Changes to This Policy</h2>
+  <p>
+    We may update this Privacy Policy from time to time. If we make material changes, we will
+    notify you in the App or by email before the change takes effect. The "Last updated" date
+    at the top of this page always reflects the current version.
+  </p>
+
+  <h2 id="contact">13. Contact &amp; Grievance Officer</h2>
+  <p>
+    For any privacy questions, data requests, or complaints, contact:<br>
+    <strong>Email:</strong> <a href="mailto:privacy@v1logbooks.com">privacy@v1logbooks.com</a>
+  </p>
+  <p class="callout">
+    <strong>Placeholder notice:</strong> the contact address above is a placeholder pending
+    confirmation of the real support/grievance-officer address (the App currently ships with a
+    dead <code>support@example.com</code> address that must be replaced before launch — see
+    <code>frontend/src/config/support.js</code>). Update this page once the real address is set.
+  </p>
+
+  <footer>
+    &copy; 2026 V1 Logbooks. This policy applies to the V1 Logbooks mobile application
+    (Android &amp; iOS, package id <code>com.v1logbooks.app</code>) and any associated web
+    services.
+  </footer>
+
+</div>
+</body>
+</html>
