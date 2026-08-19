@@ -50,7 +50,7 @@
 <div class="wrap">
 
   <h1>Privacy Policy</h1>
-  <div class="meta">V1 Logbooks (com.v1logbooks.app) &middot; Last updated: 3 July 2026</div>
+  <div class="meta">V1 Logbooks (com.v1logbooks.app) &middot; Last updated: 19 August 2026</div>
 
   <p>
     This Privacy Policy explains what personal data V1 Logbooks ("we", "us", "the App")
@@ -87,7 +87,9 @@
     <li>Your pilot type/role and, if applicable, your DGCA eGCA licence ID</li>
     <li>Mobile phone number</li>
     <li>Emergency contact name and phone number</li>
-    <li>Optionally, if you choose to add them in Settings: gender, secondary phone, address, and a profile photo</li>
+    <li>Optionally, if you choose to add it in Settings: a profile photo</li>
+    <li>Your career stage and employment details you choose to record — for example your default operator/airline, and whether you are an instructor or captain — used to tailor currency and progress calculations to your situation</li>
+    <li>A timestamp and version marker recording when you accepted this Policy and our Terms, for our own compliance records</li>
   </ul>
 
   <h3>Flight logbook data</h3>
@@ -165,7 +167,7 @@
     <tr><th>Who</th><th>What they receive</th><th>Why</th></tr>
     <tr>
       <td>Google (Gemini AI)</td>
-      <td>Photos of logbook pages you choose to scan are sent from our servers to Google's Gemini API to read the page and return structured flight data. The extracted data passes through our servers but is not stored there -- it is returned directly to your device for you to review before saving.</td>
+      <td>Photos of logbook pages you choose to scan are sent from our servers to Google's Gemini API to read the page and return structured flight data. The extracted data passes through our servers but is not stored there -- it is returned directly to your device for you to review before saving. If you use your own Gemini API key, it is sent to our servers to make that request but is not logged or persisted there.</td>
       <td>To let you import historical logbook entries by photo instead of typing them by hand</td>
     </tr>
     <tr>
@@ -182,6 +184,11 @@
       <td>Railway</td>
       <td>All account and flight data described above, as our infrastructure/database host</td>
       <td>Hosting our backend servers and database</td>
+    </tr>
+    <tr>
+      <td>Google (Drive backup)</td>
+      <td>If you choose to connect Google Drive backup, your logbook backup file is uploaded directly from your device to your own Google Drive using Google's sign-in and Drive APIs. This is separate from the Gemini AI row above and does not pass through our servers — we never see or hold the backup file or your Google account details.</td>
+      <td>To let you keep an additional backup copy of your logbook in your own Google Drive</td>
     </tr>
   </table>
   <p>
@@ -206,7 +213,7 @@
     <li><strong>Account &amp; flight data:</strong> kept for as long as your account is active.</li>
     <li><strong>Scanned-image extraction results:</strong> not stored on our servers -- passed through to your device for review, then discarded server-side.</li>
     <li><strong>Backups:</strong> the App's backup/export feature generates a file that is saved to your own device, and a copy is also stored on our servers so it can be restored later. You can delete individual backup records at any time from the in-App backup history. Backup files are not yet encrypted at rest on our servers, so treat any copy you download or share like the rest of your flight record.</li>
-    <li><strong>Account deletion:</strong> if you delete your account in Settings, we permanently and irreversibly delete your profile, flight logbook, credentials, crew records, and all associated data from our servers. This action cannot be undone.</li>
+    <li><strong>Account deletion:</strong> if you delete your account in Settings, we permanently and irreversibly delete your profile, flight logbook, credentials, crew records, and all associated data from our servers. This action cannot be undone. <strong>One narrow exception:</strong> we retain a minimal anti-abuse record — your DGCA eGCA ID and the date your free trial was used — with no flight or personal data attached, solely to prevent the same eGCA ID from being used to claim a new free trial after deleting and recreating an account.</li>
   </ul>
 
   <h2 id="security">8. Data Security</h2>
@@ -224,7 +231,7 @@
     <li><strong>Access</strong> the personal data we hold about you</li>
     <li><strong>Correct</strong> inaccurate data (most fields are editable directly in the App)</li>
     <li><strong>Export</strong> your data via the in-App backup feature</li>
-    <li><strong>Delete</strong> your account and all associated data via the in-App account-deletion feature, or by contacting us</li>
+    <li><strong>Delete</strong> your account and associated data via the in-App account-deletion feature, or by contacting us (see the narrow anti-abuse exception in Section 7)</li>
     <li><strong>Withdraw consent</strong> where processing is based on consent, without affecting the lawfulness of prior processing</li>
     <li><strong>Lodge a complaint</strong> with our Grievance Officer (Section 13) or the applicable data protection authority</li>
   </ul>
@@ -253,13 +260,7 @@
   <h2 id="contact">13. Contact &amp; Grievance Officer</h2>
   <p>
     For any privacy questions, data requests, or complaints, contact:<br>
-    <strong>Email:</strong> <a href="mailto:privacy@v1logbooks.com">privacy@v1logbooks.com</a>
-  </p>
-  <p class="callout">
-    <strong>Placeholder notice:</strong> the contact address above is a placeholder pending
-    confirmation of the real support/grievance-officer address (the App currently ships with a
-    dead <code>support@example.com</code> address that must be replaced before launch — see
-    <code>frontend/src/config/support.js</code>). Update this page once the real address is set.
+    <strong>Email:</strong> <a href="mailto:support@v1logbooks.com">support@v1logbooks.com</a>
   </p>
 
   <footer>
