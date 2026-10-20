@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delete Your Account &mdash; V1 Logbooks</title>
+<style>
+  :root {
+    --ink: #1a2233;
+    --muted: #5b6472;
+    --accent: #0f766e;
+    --border: #e2e5ea;
+    --bg-soft: #f7f8fa;
+    --error: #b42318;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    line-height: 1.6;
+    background: #fff;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 48px 24px 96px; }
+  h1 { font-size: 1.85rem; margin-bottom: 4px; }
+  .meta { color: var(--muted); font-size: 0.92rem; margin-bottom: 32px; }
+  h2 { font-size: 1.25rem; margin-top: 40px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  p, li { color: #333; }
+  ul, ol { padding-left: 1.3em; }
+  li { margin-bottom: 6px; }
+  a { color: var(--accent); }
+  .callout {
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin: 16px 0;
+    font-size: 0.95rem;
+  }
+  form { margin-top: 16px; }
+  label { display: block; font-weight: 600; font-size: 0.95rem; margin: 16px 0 6px; }
+  .hint { font-weight: 400; color: var(--muted); font-size: 0.85rem; }
+  input, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font: inherit;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--ink);
+  }
+  input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  textarea { min-height: 96px; resize: vertical; }
+  .check { display: flex; gap: 10px; align-items: flex-start; margin-top: 18px; font-weight: 400; }
+  .check input { width: auto; margin-top: 5px; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  button {
+    margin-top: 20px;
+    padding: 12px 22px;
+    font: inherit;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:disabled { opacity: 0.6; cursor: default; }
+  .status { margin-top: 16px; padding: 12px 16px; border-radius: 6px; display: none; }
+  .status.visible { display: block; }
+  .status.success { background: #ecfdf5; color: #065f46; }
+  .status.error { background: #fef3f2; color: var(--error); }
+  footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Delete Your Account</h1>
+  <div class="meta">V1 Logbooks (com.v1logbooks.app) &middot; Developer: Vinnta Lifesciences</div>
+
+  <p>
+    You can permanently delete your V1 Logbooks account and the data linked to it at any time.
+    You do not need the app installed to make a request &mdash; use the form below.
+  </p>
+
+  <h2>Option 1: Delete in the app (immediate)</h2>
+  <ol>
+    <li>Open V1 Logbooks and sign in.</li>
+    <li>Go to <strong>Settings</strong>.</li>
+    <li>Tap <strong>Delete Pilot Account</strong>.</li>
+    <li>Type your full name to confirm, then tap <strong>Delete</strong>.</li>
+  </ol>
+  <p>Your account and data are removed from our servers straight away.</p>
+
+  <h2>Option 2: Request deletion without the app</h2>
+  <p>
+    Fill in this form using the email address registered on your V1 Logbooks account. We will
+    reply to that address to confirm the request came from you, then delete your account
+    within <strong>7 days</strong> and email you once it is done.
+  </p>
+  <p>
+    You can also email <strong>support@v1logbooks.com</strong> from your registered email
+    address with the subject "Delete my account".
+  </p>
+
+  <form id="deletionForm" novalidate>
+    <label for="email">Registered email address</label>
+    <input id="email" name="email" type="email" autocomplete="email" required>
+
+    <label for="name">Full name <span class="hint">(as on your V1 Logbooks profile)</span></label>
+    <input id="name" name="name" type="text" autocomplete="name" required>
+
+    <label for="reason">Reason for leaving <span class="hint">(optional)</span></label>
+    <textarea id="reason" name="reason"></textarea>
+
+    <div class="hp" aria-hidden="true">
+      <label for="website">Leave this field empty</label>
+      <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+    </div>
+
+    <label class="check">
+      <input id="understand" name="understand" type="checkbox" required>
+      <span>I understand that deletion is permanent and my logbook cannot be recovered afterwards.</span>
+    </label>
+
+    <button id="submitBtn" type="submit">Request account deletion</button>
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+  </form>
+
+  <h2>What gets deleted</h2>
+  <ul>
+    <li>Your profile and contact details</li>
+    <li>Every flight and simulator entry in your logbook, including its edit history</li>
+    <li>Licences, medicals, ratings and recurrent training records, with any scanned documents</li>
+    <li>Previous experience and eGCA gap hour entries</li>
+    <li>Your copy of your eGCA logbook and eGCA upload history held by us</li>
+    <li>Backups stored on our servers</li>
+    <li>Crew contacts, custom airfields and app settings</li>
+  </ul>
+
+  <h2>What we keep</h2>
+  <div class="callout">
+    We keep only your DGCA eGCA ID and the dates of your free trial, with no flight or personal
+    data attached. This stops the same eGCA ID from claiming a second free trial after deleting
+    and re-creating an account. See section 7 of our <a href="/privacy-policy.html#retention">Privacy Policy</a>.
+  </div>
+
+  <h2>Before you delete</h2>
+  <ul>
+    <li><strong>Download a copy first</strong> if you may need your logbook later (Settings &rarr; Full Backup).
+      We cannot restore a deleted account.</li>
+    <li>Deleting your V1 Logbooks account does <strong>not</strong> delete or change anything on the
+      DGCA eGCA portal. Flights already uploaded there stay on your eGCA record.</li>
+    <li>Data stored on your phone is removed when you uninstall the app.</li>
+    <li>You can sign up again later with the same email, but you will start with an empty logbook.</li>
+  </ul>
+
+  <footer>
+    &copy; 2026 V1 Logbooks &middot; <a href="/">Home</a> &middot;
+    <a href="/privacy-policy.html">Privacy Policy</a> &middot;
+    <a href="/terms-of-service.html">Terms of Use</a>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var form = document.getElementById('deletionForm');
+    var statusEl = document.getElementById('status');
+    var btn = document.getElementById('submitBtn');
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function show(type, text) {
+      statusEl.textContent = text;
+      statusEl.className = 'status visible ' + type;
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      statusEl.className = 'status';
+
+      var email = form.email.value.trim();
+      var name = form.name.value.trim();
+      var reason = form.reason.value.trim();
+
+      if (!EMAIL_RE.test(email)) { show('error', 'Please enter a valid email address.'); return; }
+      if (!name) { show('error', 'Please enter your full name.'); return; }
+      if (!form.understand.checked) { show('error', 'Please tick the box to confirm you understand deletion is permanent.'); return; }
+
+      var message =
+        'Please permanently delete my V1 Logbooks account.\n\n' +
+        'Registered email: ' + email + '\n' +
+        'Full name: ' + name + '\n' +
+        'Reason: ' + (reason || '(not given)') + '\n\n' +
+        'Submitted from the website account deletion page.';
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      try {
+        var res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            subject: 'Account deletion request',
+            message: message,
+            website: form.website.value
+          })
+        });
+        var data = await res.json().catch(function () { return {}; });
+        if (res.ok && data.ok) {
+          show('success', 'Request received. We will email ' + email + ' to confirm, then delete your account within 7 days.');
+          form.reset();
+        } else {
+          show('error', (data && data.error) || 'Something went wrong. Please email support@v1logbooks.com instead.');
+        }
+      } catch (err) {
+        show('error', 'Network error. Please try again, or email support@v1logbooks.com.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Request account deletion';
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
