@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>V1 Logbooks — DGCA-Compliant Pilot Logbook for All Aviators</title>
+<title>V1 Logbooks — Pilot Logbook Built for DGCA Requirements</title>
 <meta name="description" content="Log flights, upload to eGCA directly, and track DGCA approvals — all from your phone. Built for Indian aviators.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -654,6 +654,7 @@
 
   .footer-links {
     display: flex;
+    flex-wrap: wrap;
     gap: 24px;
     list-style: none;
   }
@@ -662,6 +663,7 @@
   .footer-links a:hover { color: var(--white); }
 
   .footer-copy { font-size: 13px; color: var(--text-muted); }
+  .footer-disclaimer { margin-top: 24px; text-align: center; font-size: 12px; }
 
   /* RESPONSIVE */
   @media (max-width: 768px) {
@@ -699,7 +701,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="container">
-    <div class="hero-badge">DGCA-compliant · eGCA direct upload</div>
+    <div class="hero-badge">Built for DGCA requirements · eGCA direct upload</div>
     <h1>The logbook built for <em>every aviator</em></h1>
     <p class="hero-sub">Log flights, upload to eGCA directly, and track DGCA approvals — all from your phone. No paperwork, no guesswork.</p>
     <div class="hero-actions">
@@ -1033,6 +1035,7 @@
       </ul>
       <div class="footer-copy">© 2026 Vinnta Lifesciences. All rights reserved.</div>
     </div>
+    <p class="footer-copy footer-disclaimer">V1 Logbooks is an independent app, not affiliated with or endorsed by DGCA. Always verify your hours against your official eGCA record.</p>
   </div>
 </footer>
 
